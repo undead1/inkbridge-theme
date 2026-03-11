@@ -14,6 +14,12 @@ Text Domain: inkbridge-theme
 Tags: one-column, custom-colors, custom-menu, custom-logo, full-site-editing, wide-blocks, block-styles
 */
 
+/* === Empty Paragraph Cleanup (CSS safety net) === */
+.wp-block-post-content p:empty,
+.entry-content p:empty {
+	display: none;
+}
+
 /* === Progressive Enhancement === */
 h1, h2, h3, h4, h5, h6, blockquote, figcaption, p {
 	text-wrap: pretty;
@@ -48,11 +54,10 @@ a {
 
 /*
  * === Raw HTML Content Styling ===
- * Classic Editor / AI-generated content is raw HTML (no block wrappers).
- * WordPress applies wpautop() for <p> tags, but elements like <table>,
- * <pre>, <code>, <blockquote>, <ul>, <ol> need direct selectors.
- * theme.json block styles only target .wp-block-* classes.
- * These rules ensure identical rendering for raw HTML.
+ * AI-generated content is raw HTML (no block wrappers). wpautop is disabled
+ * (see functions.php). Elements need direct selectors because theme.json
+ * block styles only target .wp-block-* classes. Child themes that use
+ * section-based layouts should set blockGap to "0" in their theme.json.
  */
 
 /* Headings */
@@ -86,6 +91,12 @@ a {
 	letter-spacing: 0.1em;
 }
 
+/* Paragraph spacing */
+.wp-block-post-content p {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
 /* Strong weight normalization */
 .wp-block-post-content strong {
 	font-weight: 600;
@@ -96,6 +107,8 @@ a {
 .wp-block-post-content ol {
 	line-height: 1.7;
 	padding-left: 1.5em;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .wp-block-post-content li {
@@ -130,6 +143,8 @@ a {
 	border-collapse: collapse;
 	width: 100%;
 	font-size: var(--wp--preset--font-size--small);
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
 }
 
 .wp-block-post-content th {
@@ -166,6 +181,8 @@ a {
 	border: 1px solid var(--wp--preset--color--accent-6);
 	border-radius: 8px;
 	padding: 1.5rem;
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
 	overflow-x: auto;
 }
 

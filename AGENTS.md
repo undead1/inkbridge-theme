@@ -125,7 +125,11 @@ The reference page includes: color palette swatches, heading hierarchy (h1–h6)
 
 ## Content Rendering
 
-Post content uses Classic Editor (raw HTML, not block markup). WordPress applies `wpautop()` for paragraph wrapping.
+Post content uses Classic Editor (raw HTML, not block markup).
+
+**Important:** `wpautop()` is disabled in this theme. Content **must** include proper HTML tags — wrap text in `<p>` tags, use `<br>` for line breaks. Plain text with double-newlines will NOT be auto-wrapped. This ensures AI-generated structured HTML (divs, sections, tables) renders exactly as written without WordPress mangling the markup.
+
+WordPress's block layout gap (`margin-block-start`) is also reset on post content. All vertical spacing between elements is controlled explicitly by the theme's CSS (see style.css).
 
 ### Visual Description of Each Element
 
@@ -270,5 +274,7 @@ This theme is designed to be used as a **parent theme**. Each site gets a child 
 - `patterns/`: Same-name file in child overrides parent. New files are additive. Use the child theme slug in pattern headers.
 - `style.css`: Parent style.css loads first, then child. Child rules override parent.
 - `functions.php`: Child loads before parent. Only create if the site needs site-specific PHP.
+
+**Block gap override:** The parent sets `blockGap: "1.2rem"` for template spacing. If your child theme uses custom section-based layouts (divs with their own padding), set `styles.spacing.blockGap` to `"0"` in the child `theme.json` to prevent WordPress from injecting extra margins between sections. WordPress generates block gap as inline `<style>` from `theme.json`, so CSS overrides in `style.css` will not work — it must be changed in `theme.json`.
 
 **Do NOT edit parent files for site-specific changes.** All customization belongs in the child theme.
