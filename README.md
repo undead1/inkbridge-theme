@@ -2,6 +2,8 @@
 
 AI-agent-first WordPress block theme. Designed to be fully operated by AI agents — humans never touch theme code. Optimized for rendering AI-generated raw HTML content.
 
+[Learn more](https://inkbridge.my/inkbridge-theme-product/) | [Releases](https://github.com/undead1/inkbridge-theme/releases)
+
 ## Features
 
 - **AI-agent-first** — AI agents modify everything via file edits. `AGENTS.md` included with file map, visual descriptions, and rebranding instructions.
