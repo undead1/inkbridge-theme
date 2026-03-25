@@ -16,13 +16,13 @@
 			<div class="wp-block-group has-accent-4-color has-text-color has-small-font-size">
 				<!-- wp:post-date /-->
 				<!-- wp:paragraph -->
-				<p>·</p>
+				<p>&middot;</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:post-terms {"term":"category"} /-->
 			</div>
 			<!-- /wp:group -->
 
-			<!-- wp:post-excerpt {"moreText":"Continue reading","excerptLength":30} /-->
+			<!-- wp:post-excerpt {"moreText":"<?php echo esc_attr__( 'Continue reading', 'inkbridge-theme' ); ?>","excerptLength":30} /-->
 		</div>
 		<!-- /wp:group -->
 	<!-- /wp:post-template -->
@@ -35,7 +35,7 @@
 
 	<!-- wp:query-no-results -->
 		<!-- wp:paragraph {"align":"center","textColor":"accent-4"} -->
-		<p class="has-text-align-center has-accent-4-color has-text-color">No posts found.</p>
+		<p class="has-text-align-center has-accent-4-color has-text-color"><?php esc_html_e( 'No posts found.', 'inkbridge-theme' ); ?></p>
 		<!-- /wp:paragraph -->
 	<!-- /wp:query-no-results -->
 </div>

@@ -12,13 +12,13 @@
 	<!-- /wp:heading -->
 
 	<!-- wp:paragraph {"align":"center","textColor":"accent-4","fontSize":"large"} -->
-	<p class="has-text-align-center has-accent-4-color has-text-color has-large-font-size">Page not found. The page you are looking for does not exist or has been moved.</p>
+	<p class="has-text-align-center has-accent-4-color has-text-color has-large-font-size"><?php esc_html_e( 'Page not found. The page you are looking for does not exist or has been moved.', 'inkbridge-theme' ); ?></p>
 	<!-- /wp:paragraph -->
 
-	<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Search this site...","widthUnit":"%","width":100,"buttonText":"Search","buttonPosition":"button-inside","buttonUseIcon":true} /-->
+	<!-- wp:search {"label":"<?php echo esc_attr__( 'Search', 'inkbridge-theme' ); ?>","showLabel":false,"placeholder":"<?php echo esc_attr__( 'Search this site...', 'inkbridge-theme' ); ?>","widthUnit":"%","width":100,"buttonText":"<?php echo esc_attr__( 'Search', 'inkbridge-theme' ); ?>","buttonPosition":"button-inside","buttonUseIcon":true} /-->
 
 	<!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"top":"var:preset|spacing|40"}}}} -->
-	<p class="has-text-align-center" style="margin-top:var(--wp--preset--spacing--40)"><a href="/">Back to homepage</a></p>
+	<p class="has-text-align-center" style="margin-top:var(--wp--preset--spacing--40)"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Back to homepage', 'inkbridge-theme' ); ?></a></p>
 	<!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->

@@ -1,9 +1,8 @@
 /*
-Theme Name: Inkbridge Theme
-Theme URI: https://inkbridge.my
+Theme Name: Inkbridge
 Author: Inkbridge
 Author URI: https://inkbridge.my
-Description: AI-Agent-First Theme — fully operated by AI agents, not humans. No manual CSS/JS/PHP editing needed. Optimized for rendering AI-generated HTML content. Use as a parent theme with a child theme per site. See AGENTS.md for the AI agent guide.
+Description: An AI-agent-first WordPress theme — built to be operated by AI agents, not clicked through by humans. Ships with AGENTS.md, a machine-readable guide for AI-assisted site management. Block theme architecture (Site Editor, theme.json) with full Classic Editor support for raw HTML content. Semantic design token system, pre-styled HTML elements, and child theme architecture for multi-site AI workflows.
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.0
@@ -11,47 +10,39 @@ Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: inkbridge-theme
-Tags: one-column, custom-colors, custom-menu, custom-logo, full-site-editing, wide-blocks, block-styles
+Tags: blog, one-column, custom-colors, custom-menu, editor-style, full-site-editing, wide-blocks, block-styles, block-patterns, translation-ready
 */
-
 /* === Empty Paragraph Cleanup (CSS safety net) === */
 .wp-block-post-content p:empty,
 .entry-content p:empty {
 	display: none;
 }
-
 /* === Progressive Enhancement === */
 h1, h2, h3, h4, h5, h6, blockquote, figcaption, p {
 	text-wrap: pretty;
 }
-
 /* === Accessibility: Focus Styles === */
 :where(.wp-site-blocks *:focus) {
 	outline: 2px solid var(--wp--preset--color--accent-1);
 	outline-offset: 2px;
 }
-
 /* === Link Consistency === */
 a {
 	text-decoration-thickness: 1px !important;
 	text-underline-offset: 0.15em;
 }
-
 /* === Overflow Handling === */
 :where(pre) {
 	overflow-x: auto;
 }
-
 .wp-block-table {
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
 }
-
 /* === Navigation Submenu === */
 .wp-block-navigation .wp-block-navigation-submenu .wp-block-navigation-item:not(:last-child) {
 	margin-bottom: 3px;
 }
-
 /*
  * === Raw HTML Content Styling ===
  * AI-generated content is raw HTML (no block wrappers). wpautop is disabled
@@ -59,7 +50,6 @@ a {
  * block styles only target .wp-block-* classes. Child themes that use
  * section-based layouts should set blockGap to "0" in their theme.json.
  */
-
 /* Headings */
 .wp-block-post-content h1,
 .wp-block-post-content h2,
@@ -73,7 +63,6 @@ a {
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
 }
-
 .wp-block-post-content h1 { font-size: var(--wp--preset--font-size--xxx-large); }
 .wp-block-post-content h2 { font-size: var(--wp--preset--font-size--xx-large); }
 .wp-block-post-content h3 { font-size: var(--wp--preset--font-size--x-large); }
@@ -90,18 +79,15 @@ a {
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 }
-
 /* Paragraph spacing */
 .wp-block-post-content p {
 	margin-top: 0;
 	margin-bottom: 1em;
 }
-
 /* Strong weight normalization */
 .wp-block-post-content strong {
 	font-weight: 600;
 }
-
 /* Lists */
 .wp-block-post-content ul,
 .wp-block-post-content ol {
@@ -110,15 +96,12 @@ a {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
-
 .wp-block-post-content li {
 	margin-top: 0.5rem;
 }
-
 .wp-block-post-content li::marker {
 	color: var(--wp--preset--color--accent-1);
 }
-
 /* Nested lists */
 .wp-block-post-content ul ul,
 .wp-block-post-content ol ol,
@@ -127,7 +110,6 @@ a {
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
 }
-
 /* Blockquotes */
 .wp-block-post-content blockquote {
 	border-left: 4px solid var(--wp--preset--color--accent-1);
@@ -137,7 +119,6 @@ a {
 	font-size: var(--wp--preset--font-size--large);
 	font-style: normal;
 }
-
 /* Tables */
 .wp-block-post-content table {
 	border-collapse: collapse;
@@ -146,23 +127,19 @@ a {
 	margin-top: 1.5em;
 	margin-bottom: 1.5em;
 }
-
 .wp-block-post-content th {
 	text-align: left;
 	font-weight: 600;
 	background: var(--wp--preset--color--accent-3);
 }
-
 .wp-block-post-content th,
 .wp-block-post-content td {
 	padding: 0.75rem 1rem;
 	border-bottom: 1px solid var(--wp--preset--color--accent-6);
 }
-
 .wp-block-post-content tr:hover td {
 	background: var(--wp--preset--color--accent-3);
 }
-
 /* Code: inline */
 .wp-block-post-content code {
 	font-family: var(--wp--preset--font-family--mono);
@@ -171,7 +148,6 @@ a {
 	padding: 0.15em 0.4em;
 	border-radius: 4px;
 }
-
 /* Code: blocks */
 .wp-block-post-content pre {
 	font-family: var(--wp--preset--font-family--mono);
@@ -185,21 +161,18 @@ a {
 	margin-bottom: 1.5em;
 	overflow-x: auto;
 }
-
 .wp-block-post-content pre code {
 	background: none;
 	padding: 0;
 	border-radius: 0;
 	font-size: inherit;
 }
-
 /* Images */
 .wp-block-post-content img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 8px;
 }
-
 /* Horizontal rules */
 .wp-block-post-content hr {
 	border: none;

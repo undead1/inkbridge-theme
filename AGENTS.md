@@ -10,7 +10,7 @@ If no child theme exists yet for your site, create one before making any changes
 inkbridge-theme/
 ├── style.css        → Theme metadata + raw HTML content CSS rules
 ├── theme.json       → Design system: colors, fonts, spacing, layout, block styles
-├── functions.php    → Enqueues style.css. Do not add complexity here.
+├── functions.php    → Style enqueue, Customizer settings, optional wpautop toggle
 ├── AGENTS.md        → This file
 ├── templates/
 │   ├── index.html       → Blog listing (uses hidden-query-loop pattern)
@@ -29,9 +29,43 @@ inkbridge-theme/
     └── hidden-visual-reference.php → Element showcase (screenshot this for visual context)
 ```
 
+## Theme Options (Customizer)
+
+The theme registers settings under **Appearance > Customize > Inkbridge Options**.
+
+### Disable wpautop (automatic paragraphs)
+
+| Setting | Theme mod key | Default |
+|---------|---------------|---------|
+| Disable automatic paragraphs | `inkbridge_disable_wpautop` | `false` (OFF) |
+
+**What it does:** When enabled, removes WordPress's `wpautop()` filter from post content and excerpts. This prevents WordPress from auto-wrapping text in `<p>` tags and inserting `<br>` tags for line breaks.
+
+**When to enable (recommended):**
+- The site serves AI-generated content with proper HTML markup (divs, sections, tables, structured articles)
+- Content is created via Classic Editor or the REST API with raw HTML
+- You are experiencing broken layouts caused by wpautop inserting unwanted `<p>` tags inside structured HTML
+
+**When to leave disabled:**
+- Content is written by humans in the WordPress editor using plain text with double-newline paragraph breaks
+- The site uses the Block Editor (Gutenberg) exclusively — block markup is not affected by wpautop
+
+**How to enable via code (for AI agents and child theme setup):**
+```php
+// In child theme functions.php or via WP-CLI:
+set_theme_mod( 'inkbridge_disable_wpautop', true );
+```
+
+**How to enable via WP-CLI:**
+```bash
+wp theme mod set inkbridge_disable_wpautop 1
+```
+
+**Important:** When wpautop is disabled, all content **must** include proper HTML tags — wrap text in `<p>` tags, use `<br>` for line breaks. Plain text with double-newlines will NOT be auto-wrapped.
+
 ## How to Rebrand
 
-Edit `theme.json` → `settings.color.palette`. There are 8 color slots:
+Edit `theme.json` > `settings.color.palette`. There are 8 color slots:
 
 | Slug | Purpose | Default |
 |------|---------|---------|
@@ -50,7 +84,7 @@ Change the `color` values. All templates and style.css reference these via `var:
 
 ## How to Change Fonts
 
-Edit `theme.json` → `settings.typography.fontFamilies`. Two font slots:
+Edit `theme.json` > `settings.typography.fontFamilies`. Two font slots:
 
 | Slug | Purpose | Default |
 |------|---------|---------|
@@ -85,11 +119,11 @@ Edit `theme.json` → `settings.typography.fontFamilies`. Two font slots:
 | Slug | Size | Use |
 |------|------|-----|
 | `small` | 0.875rem (14px) | Captions, metadata, fine print |
-| `medium` | 1rem–1.125rem | Body text (default) |
-| `large` | 1.125rem–1.375rem | h4, large body |
-| `x-large` | 1.5rem–2rem | h3 |
-| `xx-large` | 2rem–3rem | h2, post titles |
-| `xxx-large` | 2.5rem–4rem | h1, hero headlines |
+| `medium` | 1rem-1.125rem | Body text (default) |
+| `large` | 1.125rem-1.375rem | h4, large body |
+| `x-large` | 1.5rem-2rem | h3 |
+| `xx-large` | 2rem-3rem | h2, post titles |
+| `xxx-large` | 2.5rem-4rem | h1, hero headlines |
 
 Sizes with ranges are fluid (responsive via `clamp()`).
 
@@ -121,32 +155,33 @@ A showcase page exists at `patterns/hidden-visual-reference.php` containing ever
 2. Use the pattern slug `inkbridge-theme/hidden-visual-reference` or import via the helper in functions.php (see below)
 3. Screenshot the rendered page to build visual context
 
-The reference page includes: color palette swatches, heading hierarchy (h1–h6), body text with inline elements, unordered and ordered lists (with nesting), blockquotes, pullquotes, code blocks (inline and block), tables, buttons, separators, spacing scale, and a full simulated AI-generated article with raw HTML.
+The reference page includes: color palette swatches, heading hierarchy (h1-h6), body text with inline elements, unordered and ordered lists (with nesting), blockquotes, pullquotes, code blocks (inline and block), tables, buttons, separators, spacing scale, and a full simulated AI-generated article with raw HTML.
 
 ## Content Rendering
 
-Post content uses Classic Editor (raw HTML, not block markup).
+The theme includes comprehensive CSS for raw HTML elements inside `.wp-block-post-content`. This means both Block Editor content (with `.wp-block-*` classes) and Classic Editor / API-generated raw HTML render beautifully.
 
-**Important:** `wpautop()` is disabled in this theme. Content **must** include proper HTML tags — wrap text in `<p>` tags, use `<br>` for line breaks. Plain text with double-newlines will NOT be auto-wrapped. This ensures AI-generated structured HTML (divs, sections, tables) renders exactly as written without WordPress mangling the markup.
+**If your site uses AI-generated or raw HTML content:**
+Enable the "Disable automatic paragraphs" option (see Theme Options above). When wpautop is disabled, content **must** include proper HTML tags — wrap text in `<p>` tags, use `<br>` for line breaks.
 
 WordPress's block layout gap (`margin-block-start`) is also reset on post content. All vertical spacing between elements is controlled explicitly by the theme's CSS (see style.css).
 
 ### Visual Description of Each Element
 
-**Headings (h1–h6):**
+**Headings (h1-h6):**
 - Weight 600 (semi-bold), line-height 1.2 (tight), letter-spacing -0.02em (slightly condensed)
 - Margin: 1.5em above (creates clear section breaks), 0.5em below (stays connected to content)
-- h1: 2.5–4rem (fluid), the largest text on the page
-- h2: 2–3rem (fluid), main section dividers
-- h3: 1.5–2rem (fluid), subsections
-- h4: 1.125–1.375rem (fluid), minor subsections
-- h5: 1–1.125rem, UPPERCASE, letter-spacing 0.05em — label-style heading
+- h1: 2.5-4rem (fluid), the largest text on the page
+- h2: 2-3rem (fluid), main section dividers
+- h3: 1.5-2rem (fluid), subsections
+- h4: 1.125-1.375rem (fluid), minor subsections
+- h5: 1-1.125rem, UPPERCASE, letter-spacing 0.05em — label-style heading
 - h6: 0.875rem (14px), UPPERCASE, letter-spacing 0.1em — smallest label heading
 
 **Body text (p):**
-- Font: system UI sans-serif, 1–1.125rem fluid, weight 400, line-height 1.7
+- Font: system UI sans-serif, 1-1.125rem fluid, weight 400, line-height 1.7
 - Color: contrast (#0F172A) — near-black on white background
-- Max content width: 720px — comfortable 65–80 character line length
+- Max content width: 720px — comfortable 65-80 character line length
 
 **Strong/bold:**
 - Weight 600 (not browser default 700) — slightly lighter, more refined
@@ -176,11 +211,11 @@ WordPress's block layout gap (`margin-block-start`) is also reset on post conten
 - Background: accent-3 (#F8FAFC, very light gray)
 - Padding: 1rem top/bottom, 1.5rem left/right
 - Margin: 1.5em above and below
-- Font size: large (1.125–1.375rem)
+- Font size: large (1.125-1.375rem)
 - Font style: normal (not italic)
 
 **Pullquotes:**
-- Font size: x-large (1.5–2rem) — prominently large
+- Font size: x-large (1.5-2rem) — prominently large
 - Weight: 400 (regular — elegance through size, not boldness)
 - Border: 2px solid accent-1 (#4F46E5) top and bottom only
 - Padding: 24px top and bottom
@@ -267,6 +302,12 @@ This theme is designed to be used as a **parent theme**. Each site gets a child 
 3. Create `theme.json` with only the overridden values (merges with parent)
 4. Optionally add `templates/`, `parts/`, `patterns/` directories for site-specific overrides
 5. Create an `AGENTS.md` in the child that references this parent guide
+
+**Recommended child theme setup for AI-generated content sites:**
+```php
+// In child theme functions.php:
+set_theme_mod( 'inkbridge_disable_wpautop', true );
+```
 
 **Merge behavior:**
 - `theme.json`: Child values override parent. **Important:** `settings.color.palette` replaces the entire array — include all 8 color slots if overriding any.
